@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Postgres (Neon) in every environment — local dev and serverless.
+  // SQLite can't work on serverless (ephemeral filesystem), so the project
+  // was moved off SQLite for deployability. Set DATABASE_URL to your Neon
+  // connection string (see .env.example).
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  tasks     Task[]
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  // Status/priority are validated by the Zod schemas in lib/validation.ts
+  // (the source of truth for allowed values); the DB stores plain strings.
+  status      String   @default("TODO")
+  priority    String   @default("MEDIUM")
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}

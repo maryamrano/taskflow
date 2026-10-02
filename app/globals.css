@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+
+  /* Ink — near-blacks, never absolute #000 */
+  --color-ink-950: #0a0a0c;
+  --color-ink-900: #101014;
+  --color-ink-850: #141419;
+  --color-ink-800: #1a1a21;
+  --color-ink-700: #26262f;
+  --color-ink-600: #383842;
+
+  /* Cream — warm off-whites, never absolute #fff */
+  --color-cream-100: #edeae3;
+  --color-cream-300: #c9c5ba;
+  --color-cream-500: #98948a;
+  --color-cream-600: #6f6c65;
+
+  /* Gold — the Midnight Authority accent */
+  --color-gold-200: #f0d9a0;
+  --color-gold-300: #e6c174;
+  --color-gold-400: #d4a853;
+  --color-gold-500: #b8892f;
+  --color-gold-600: #8f6b24;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  color: var(--color-cream-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-gold-400);
+  color: var(--color-ink-950);
+}
+
+/* Slim dark scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-600) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-ink-600);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---- Signature utilities ---- */
+
+/* Ambient gradient mesh blob */
+.mesh-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(48px, -36px) scale(1.18);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+/* Frosted panel */
+.glass {
+  background: color-mix(in srgb, var(--color-ink-900) 72%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid color-mix(in srgb, var(--color-ink-700) 70%, transparent);
+}
+
+/* Faint blueprint grid backdrop */
+.bg-blueprint {
+  background-image: linear-gradient(
+      color-mix(in srgb, var(--color-cream-100) 4%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-cream-100) 4%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 30%,
+    black 30%,
+    transparent 75%
+  );
+}
+
+/* Eyebrow micro-typography */
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Gradient headline text */
+.text-gold-gradient {
+  background: linear-gradient(
+    115deg,
+    var(--color-gold-200) 10%,
+    var(--color-gold-400) 45%,
+    var(--color-gold-600) 90%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
